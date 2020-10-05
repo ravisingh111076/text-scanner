@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UnknownFormatConversionException;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -28,6 +29,15 @@ public class NumberReaderTest {
                     Assert.assertEquals("0",
                             NumberReader.getDigitalString(listOfDigits.get(in))));
         });
+    }
+
+    @Test(expected = UnknownFormatConversionException.class)
+    public void testInValidDataInput_ExpectedException() {
+        List<String> lines = buildLinesFromFile("invalidData");
+        IntStream.range(0, lines.size()).skip(2).forEach(index -> NumberReader.processInput(lines.get(index - 2),
+                    lines.get(index - 1),
+                    lines.get(index))
+        );
     }
 
     private List<String> buildLinesFromFile(String fileName) {

@@ -1,12 +1,20 @@
 package com.sc;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class NumberReader {
 
+    private static void validateLine(String ... line) {
+        Stream.of(line).forEach(l -> {
+            if(l.length() != 27) throw new UnknownFormatConversionException("not valid line length:" + l.length());
+        }
+        );
+
+    }
     public static List<AnalogueNumber> processInput(String line1, String line2, String line3) {
+        validateLine(line1,line2,line3);
         List<AnalogueNumber> numbers = transformToAnalogueNumberList(line1, line2, line3);
         return numbers;
     }
